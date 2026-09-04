@@ -4,14 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Antonio Funes | Desarrollador</title>
+  <link rel="canonical" href="http://www.antoniofunes.dev.ar/">
+  <meta name="description" content="Pagina personal de Antonio Funes - Desarrollador en formacion. Mis habilidades, proyectos y camino en el mundo de la programacion.">
+  <meta property="og:title" content="Antonio Funes | Desarrollador">
+  <meta property="og:url" content="http://www.antoniofunes.dev.ar/">
+  <meta property="og:type" content="website">
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="icon" href="resources/Logo.png">
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
-    <div class="logo">AF</div>
+    <a href="#home" class="logo">
+      <img src="resources/Logo.png" alt="Antonio Funes" class="logo-img">
+    </a>
     <ul class="nav-links">
       <li><a href="#about">Sobre mi</a></li>
       <li><a href="#skills">Habilidades</a></li>
@@ -23,15 +30,20 @@
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-content">
-      <div class="hero-avatar">AF</div>
-      <h1>Hola, soy <span class="highlight">Antonio Funes</span></h1>
-      <p class="subtitle">Desarrollador en formacion</p>
-      <p class="tagline">
-        Apasionado por la programacion y el desarrollo web. Siempre aprendiendo nuevas tecnologias y buscando mejorar mis habilidades.
-      </p>
-      <div class="hero-buttons">
-        <a href="#skills" class="btn btn-primary">Ver mis habilidades</a>
-        <a href="#contact" class="btn btn-secondary">Contactarme</a>
+      <div class="hero-photo-wrap">
+        <img src="resources/Perfil.jpg" alt="Foto de perfil de Antonio Funes" class="hero-photo">
+        <span class="hero-badge">Disponible para colaborar</span>
+      </div>
+      <div class="hero-text">
+        <h1>Hola, soy <span class="highlight">Antonio Funes</span></h1>
+        <p class="subtitle">Desarrollador en formacion</p>
+        <p class="tagline">
+          Apasionado por la programacion y el desarrollo web. Siempre aprendiendo nuevas tecnologias y buscando mejorar mis habilidades.
+        </p>
+        <div class="hero-buttons">
+          <a href="#skills" class="btn btn-primary">Ver mis habilidades</a>
+          <a href="#contact" class="btn btn-secondary">Contactarme</a>
+        </div>
       </div>
     </div>
   </section>
@@ -56,6 +68,11 @@
           Cada dia busco ampliar mis conocimientos y mejorar mis
           habilidades para poder construir proyectos cada vez mejores.
         </p>
+        <ul class="about-list">
+          <li>Creacion de paginas web responsivas</li>
+          <li>Desarrollo frontend y backend</li>
+          <li>Soluciones con bases de datos</li>
+        </ul>
         <div class="about-stats">
           <div class="stat-card">
             <div class="stat-number">4+</div>
@@ -141,7 +158,7 @@
       <div class="project-card">
         <div class="project-icon">🌐</div>
         <h3>Sitio Web Personal</h3>
-        <p>Mi pagina web personal creada con HTML y CSS, con diseno responsivo y paleta de colores violeta.</p>
+        <p>Mi pagina web personal creada con HTML y CSS, con diseno responsivo y paleta de colores verde y azul.</p>
         <div class="project-tech">
           <span>HTML</span>
           <span>CSS</span>
