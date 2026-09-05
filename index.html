@@ -163,12 +163,12 @@
         </div>
       </div>
       <div class="project-card">
-        <div class="project-icon">🤖</div>
-        <h3>Bot de Discord</h3>
-        <p>Bot automatizado para Discord con comandos personalizados y funcionalidades variadas.</p>
+        <div class="project-icon">🌐</div>
+        <h3>Mi pagina Web</h3>
+        <p>Mi pagina de presentacion, cuenta con enlace de contacto y un poco de mi</p>
         <div class="project-tech">
-          <span>Python</span>
-          <span>Discord.py</span>
+          <span>HTML</span>
+          <span>CSS</span>
         </div>
       </div>
     </div>
@@ -185,29 +185,29 @@
       <div class="timeline-item">
         <div class="timeline-content">
           <div class="timeline-date">Inicio</div>
-          <h3>Mis primeros pasos</h3>
-          <p>Comencé a aprender HTML y CSS, creando mis primeras páginas web estáticas.</p>
+          <h3>Cursando carrera universitaria</h3>
+          <p>En la carrera de Analista Programador aprendi todo tipo de lenguajes,habilidades blandas, patrones de diseño, reglas, trabajo en equipo.</p>
         </div>
       </div>
       <div class="timeline-item">
         <div class="timeline-content">
           <div class="timeline-date">Siguiente paso</div>
-          <h3>JavaScript y lógica</h3>
-          <p>Aprendí JavaScript para agregar interactividad y lógica a mis proyectos.</p>
+          <h3>Curso de Ciencia de datos</h3>
+          <p>Aparendimos a hacer un manejo correcto de los datos,desde que datos seleccionar hasta limpiarlos y dejarlos en optimo funcionamiento para realizar analisis.</p>
         </div>
       </div>
       <div class="timeline-item">
         <div class="timeline-content">
           <div class="timeline-date">Avanzando</div>
-          <h3>Frameworks y backend</h3>
-          <p>Explorando frameworks y bases de datos para ser fullstack.</p>
+          <h3>Google AI Fundamentals</h3>
+          <p>Una beca que obtuve de google, en este curso aprendi el correcto uso de la AI, preguntar correctamente, brindar datos correctos entre otras cosas.</p>
         </div>
       </div>
       <div class="timeline-item">
         <div class="timeline-content">
           <div class="timeline-date">Ahora</div>
-          <h3>En constante aprendizaje</h3>
-          <p>Seguir creciendo como desarrollador y construir proyectos que impacten.</p>
+          <h3>Sigo participando de cursos y proyectos personales</h3>
+          <p>Actualmente, ademas de cursar, estoy desarrollando una web para el manejo de productos en negocios y haciendo 3 cursos relacionado al frontend y AI</p>
         </div>
       </div>
     </div>
@@ -225,7 +225,7 @@
         Estoy abierto a nuevas oportunidades, colaboraciones o simplemente charlar sobre tecnología.
       </p>
       <div class="contact-links">
-        <a href="mailto:antonio42489167@gmail.com" class="contact-link">
+        <a href="#" id="email-link" class="contact-link">
           <span class="link-icon">✉️</span> Email
         </a>
         <a href="https://github.com/HeroedelGin" target="_blank" class="contact-link">
@@ -242,6 +242,34 @@
   </section>
 
   <!-- FOOTER -->
+  <script>
+    const email = "antonio42489167@gmail.com";
+    const emailLink = document.getElementById("email-link");
+
+    async function copyEmail() {
+      try {
+        await navigator.clipboard.writeText(email);
+        emailLink.textContent = "📋 Email copiado";
+      } catch (err) {
+        const textarea = document.createElement("textarea");
+        textarea.value = email;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        emailLink.textContent = "📋 Email copiado";
+      }
+      setTimeout(() => {
+        emailLink.innerHTML = '<span class="link-icon">✉️</span> Email';
+      }, 2000);
+    }
+
+    emailLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      copyEmail();
+    });
+  </script>
+
   <footer>
     <p>Hecho con <span class="heart">♥</span> por Antonio Funes &copy; 2026</p>
   </footer>
