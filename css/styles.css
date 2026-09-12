@@ -626,6 +626,7 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
+  align-items: start;
 }
 
 .project-card {
@@ -698,6 +699,8 @@ section {
 
 .project-card.open {
   transform: none;
+  overflow: visible;
+  z-index: 3;
 }
 
 .project-card:focus-visible {
@@ -728,6 +731,8 @@ section {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.45s ease;
+  margin-left: calc(-2rem - 1px);
+  margin-right: calc(-2rem - 1px);
 }
 
 .project-card.open .project-banner-wrap {
@@ -740,33 +745,54 @@ section {
   margin-top: 1rem;
 }
 
+.project-card.open .project-banner {
+  overflow: visible;
+}
+
 .carousel {
   position: relative;
+  overflow: hidden;
+  will-change: width, margin-left;
+}
+
+.project-card.open .carousel {
+  overflow: visible;
 }
 
 .carousel-viewport {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
+  height: clamp(280px, 55vh, 520px);
+  border-radius: 0;
+  border: none;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   background: var(--bg);
 }
 
 .carousel-track {
   display: flex;
+  height: 100%;
   transition: transform 0.4s ease;
 }
 
 .carousel-slide {
   flex: 0 0 100%;
   min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-slide img {
   display: block;
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
+  width: 85%;
+  height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
 }
 
 .carousel-btn {

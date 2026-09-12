@@ -185,7 +185,7 @@
         <span class="expand-chevron" aria-hidden="true">▾</span>
         <div class="project-icon">🌐</div>
         <h3>Mi pagina Web</h3>
-        <p>Mi pagina de presentacion, cuenta con enlace de contacto y un poco de mi</p>
+        <p>Mi pagina de presentacion para el mundo laboral</p>
         <div class="project-tech">
           <span>HTML</span>
           <span>CSS</span>
@@ -322,13 +322,22 @@
   </script>
 
   <footer>
-    <p>Hecho con <span class="heart">♥</span> por Antonio Funes &copy; 2026</p>
+    <p>Hecho por Antonio Funes &copy; 2026- Todos los derechos reservados</p>
   </footer>
 
   <script>
     const projectImages = {
-      deportes: [],
-      juegos: [],
+      deportes: [
+        'resources/projects/deportes/imagen1.png',
+        'resources/projects/deportes/imagen2.png',
+        'resources/projects/deportes/imagen3.png'
+      ],
+      juegos: [
+      'resources/projects/juegos/imagen1.png',
+      'resources/projects/juegos/imagen2.png',
+      'resources/projects/juegos/imagen3.png',
+      'resources/projects/juegos/imagen4.png',
+      'resources/projects/juegos/imagen5.png'],
       'mi-pagina': []
     };
 
@@ -338,7 +347,15 @@
       let built = false;
 
       function toggleExpanded() {
-        const open = card.classList.toggle('open');
+        const wasOpen = card.classList.contains('open');
+        document.querySelectorAll('.project-card.open').forEach(function (other) {
+          if (other !== card) {
+            other.classList.remove('open');
+            other.setAttribute('aria-expanded', 'false');
+          }
+        });
+        const open = !wasOpen;
+        card.classList.toggle('open', open);
         card.setAttribute('aria-expanded', open);
         if (open && !built && banner) {
           buildPanel(banner, slug);
@@ -354,6 +371,19 @@
         }
       });
     });
+
+    function applyVariant(banner, slug) {
+      const carousel = banner.querySelector('.carousel');
+      if (!carousel) return;
+      carousel.classList.remove('carousel--right', 'carousel--both');
+
+      // de centro: expande a ambos lados; las de los costados: hacia la derecha
+      if (slug === 'juegos') {
+        carousel.classList.add('carousel--both');
+      } else {
+        carousel.classList.add('carousel--right');
+      }
+    }
 
     function buildPanel(banner, slug) {
       const images = projectImages[slug] || [];
@@ -382,6 +412,8 @@
         '<div class="carousel-dots"></div>' +
         '</div>';
 
+      applyVariant(banner, slug);
+
       const track = banner.querySelector('.carousel-track');
       const slides = banner.querySelectorAll('.carousel-slide');
       const dotsWrap = banner.querySelector('.carousel-dots');
@@ -393,7 +425,7 @@
         dot.type = 'button';
         dot.className = 'carousel-dot';
         dot.setAttribute('aria-label', 'Ir a la imagen ' + (i + 1));
-        dot.addEventListener('click', function () { index = i; update(); });
+        dot.addEventListener('click', function (e) { e.stopPropagation(); index = i; update(); });
         dotsWrap.appendChild(dot);
         dots.push(dot);
       });
@@ -403,16 +435,45 @@
         dots.forEach(function (d, i) { d.classList.toggle('active', i === index); });
       }
 
-      banner.querySelector('.next').addEventListener('click', function () {
+      banner.querySelector('.next').addEventListener('click', function (e) {
+        e.stopPropagation();
         index = (index + 1) % slides.length;
         update();
       });
-      banner.querySelector('.prev').addEventListener('click', function () {
+      banner.querySelector('.prev').addEventListener('click', function (e) {
+        e.stopPropagation();
         index = (index - 1 + slides.length) % slides.length;
         update();
       });
 
+      banner.addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+
       update();
+
+      (function () {
+        let startX = 0;
+        let dragging = false;
+        const vp = banner.querySelector('.carousel-viewport');
+        vp.addEventListener('touchstart', function (e) {
+          startX = e.touches[0].clientX;
+          dragging = true;
+        });
+        vp.addEventListener('touchend', function (e) {
+          if (!dragging) return;
+          dragging = false;
+          const diff = startX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              index = (index + 1) % slides.length;
+            } else {
+              index = (index - 1 + slides.length) % slides.length;
+            }
+            update();
+          }
+        });
+      })();
     }
   </script>
 
