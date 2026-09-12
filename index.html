@@ -156,7 +156,8 @@
       <div class="section-divider"></div>
     </div>
     <div class="projects-grid">
-      <div class="project-card">
+      <div class="project-card" data-slug="deportes" role="button" tabindex="0" aria-expanded="false">
+        <span class="expand-chevron" aria-hidden="true">▾</span>
         <div class="project-icon">🌐</div>
         <h3>Sitio Web de Deportes</h3>
         <p>Sitio Web de deportes de los clubs de General Pico</p>
@@ -164,23 +165,33 @@
           <span>HTML</span>
           <span>CSS</span>
         </div>
+        <div class="project-banner-wrap">
+          <div class="project-banner"></div>
+        </div>
       </div>
-<div class="project-card">
+      <div class="project-card" data-slug="juegos" role="button" tabindex="0" aria-expanded="false">
+        <span class="expand-chevron" aria-hidden="true">▾</span>
         <div class="project-icon">🎮</div>
         <h3>App de Juegos</h3>
         <p>Aplicación para gestionar y lanzar Juegos.</p>
         <div class="project-tech">
           <span>Java</span>
-          
+        </div>
+        <div class="project-banner-wrap">
+          <div class="project-banner"></div>
         </div>
       </div>
-      <div class="project-card">
+      <div class="project-card" data-slug="mi-pagina" role="button" tabindex="0" aria-expanded="false">
+        <span class="expand-chevron" aria-hidden="true">▾</span>
         <div class="project-icon">🌐</div>
         <h3>Mi pagina Web</h3>
         <p>Mi pagina de presentacion, cuenta con enlace de contacto y un poco de mi</p>
         <div class="project-tech">
           <span>HTML</span>
           <span>CSS</span>
+        </div>
+        <div class="project-banner-wrap">
+          <div class="project-banner"></div>
         </div>
       </div>
     </div>
@@ -313,6 +324,97 @@
   <footer>
     <p>Hecho con <span class="heart">♥</span> por Antonio Funes &copy; 2026</p>
   </footer>
+
+  <script>
+    const projectImages = {
+      deportes: [],
+      juegos: [],
+      'mi-pagina': []
+    };
+
+    document.querySelectorAll('.project-card').forEach(function (card) {
+      const slug = card.dataset.slug;
+      const banner = card.querySelector('.project-banner');
+      let built = false;
+
+      function toggleExpanded() {
+        const open = card.classList.toggle('open');
+        card.setAttribute('aria-expanded', open);
+        if (open && !built && banner) {
+          buildPanel(banner, slug);
+          built = true;
+        }
+      }
+
+      card.addEventListener('click', toggleExpanded);
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleExpanded();
+        }
+      });
+    });
+
+    function buildPanel(banner, slug) {
+      const images = projectImages[slug] || [];
+
+      if (!images.length) {
+        banner.innerHTML =
+          '<div class="carousel-placeholder">' +
+          '<span class="placeholder-icon">📁</span>' +
+          '<p>Pronto: capturas de este proyecto</p>' +
+          '<p class="placeholder-hint">resources/projects/' + slug + '/img1.png</p>' +
+          '</div>';
+        return;
+      }
+
+      banner.innerHTML =
+        '<div class="carousel">' +
+        '<div class="carousel-viewport">' +
+        '<div class="carousel-track">' +
+        images.map(function (src) {
+          return '<div class="carousel-slide"><img src="' + src + '" alt="Captura del proyecto" loading="lazy"></div>';
+        }).join('') +
+        '</div>' +
+        '<button class="carousel-btn prev" type="button" aria-label="Imagen anterior">&#10094;</button>' +
+        '<button class="carousel-btn next" type="button" aria-label="Imagen siguiente">&#10095;</button>' +
+        '</div>' +
+        '<div class="carousel-dots"></div>' +
+        '</div>';
+
+      const track = banner.querySelector('.carousel-track');
+      const slides = banner.querySelectorAll('.carousel-slide');
+      const dotsWrap = banner.querySelector('.carousel-dots');
+      let index = 0;
+
+      const dots = [];
+      slides.forEach(function (_, i) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'carousel-dot';
+        dot.setAttribute('aria-label', 'Ir a la imagen ' + (i + 1));
+        dot.addEventListener('click', function () { index = i; update(); });
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+      });
+
+      function update() {
+        track.style.transform = 'translateX(-' + (index * 100) + '%)';
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === index); });
+      }
+
+      banner.querySelector('.next').addEventListener('click', function () {
+        index = (index + 1) % slides.length;
+        update();
+      });
+      banner.querySelector('.prev').addEventListener('click', function () {
+        index = (index - 1 + slides.length) % slides.length;
+        update();
+      });
+
+      update();
+    }
+  </script>
 
 </body>
 </html>

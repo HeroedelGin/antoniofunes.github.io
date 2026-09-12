@@ -503,6 +503,10 @@ section {
   transition: transform 0.3s ease;
 }
 
+[data-theme='light'] .about-list li::before {
+  background: url('../resources/mateblanco.png') no-repeat center center / contain;
+}
+
 .about-list li::after {
   content: '';
   position: absolute;
@@ -685,6 +689,164 @@ section {
   color: var(--accent);
   border-radius: 50px;
   font-weight: 500;
+}
+
+.project-card {
+  cursor: pointer;
+  user-select: none;
+}
+
+.project-card.open {
+  transform: none;
+}
+
+.project-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.expand-chevron {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--text-muted);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.project-card:hover .expand-chevron {
+  color: var(--accent);
+}
+
+.project-card.open .expand-chevron {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.project-banner-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s ease;
+}
+
+.project-card.open .project-banner-wrap {
+  grid-template-rows: 1fr;
+}
+
+.project-banner {
+  overflow: hidden;
+  min-height: 0;
+  margin-top: 1rem;
+}
+
+.carousel {
+  position: relative;
+}
+
+.carousel-viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.carousel-slide img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--navbar-bg);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.carousel-btn.prev {
+  left: 12px;
+}
+
+.carousel-btn.next {
+  right: 12px;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--border-strong);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: var(--accent);
+  transform: scale(1.2);
+}
+
+.carousel-placeholder {
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.carousel-placeholder .placeholder-icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.carousel-placeholder p {
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.carousel-placeholder .placeholder-hint {
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  opacity: 0.75;
+  overflow-wrap: anywhere;
 }
 
 /* --- TIMELINE --- */
