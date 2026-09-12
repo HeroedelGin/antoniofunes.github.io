@@ -149,10 +149,19 @@ img {
   font-size: 1.2rem;
 }
 
-.navbar .logo-img {
+.navbar .logo-icon {
   height: 44px;
   width: auto;
   border-radius: 8px;
+}
+
+.navbar .logo-mark {
+  height: 44px;
+  width: auto;
+}
+
+[data-theme='light'] .navbar .logo-mark {
+  filter: invert(1);
 }
 
 .nav-right {
@@ -913,7 +922,8 @@ footer .heart {
     padding: 0.8rem 1rem;
   }
 
-  .navbar .logo-img {
+  .navbar .logo-icon,
+  .navbar .logo-mark {
     height: 34px;
   }
 
