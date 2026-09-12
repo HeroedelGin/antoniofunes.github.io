@@ -9,22 +9,33 @@
   <meta property="og:title" content="Antonio Funes | Desarrollador">
   <meta property="og:url" content="https://heroedelgin.dev.ar/">
   <meta property="og:type" content="website">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (e) {}
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="resources/Logo2Version.png">
+  <link rel="icon" href="resources/LogoLAF.svg">
 </head>
 <body>
 
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="#home" class="logo">
-      <img src="resources/Logo2Version.png" alt="Antonio Funes" class="logo-img">
+      <img src="resources/LogoLAF.svg" alt="Antonio Funes" class="logo-img">
     </a>
-    <ul class="nav-links">
-      <li><a href="#about">Sobre mí</a></li>
-      <li><a href="#skills">Habilidades</a></li>
-      <li><a href="#projects">Proyectos</a></li>
-      <li><a href="#contact">Contacto</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">Sobre mí</a></li>
+        <li><a href="#skills">Habilidades</a></li>
+        <li><a href="#projects">Proyectos</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema"></button>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -267,6 +278,34 @@
     emailLink.addEventListener("click", function (e) {
       e.preventDefault();
       copyEmail();
+    });
+
+    const themeToggle = document.getElementById("theme-toggle");
+
+    function setThemeIcon(theme) {
+      themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    }
+
+    themeToggle.addEventListener("click", function () {
+      const current = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      setThemeIcon(next);
+      try {
+        localStorage.setItem("theme", next);
+      } catch (err) {}
+    });
+
+    setThemeIcon(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
+
+    window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function (e) {
+      let saved = null;
+      try { saved = localStorage.getItem("theme"); } catch (err) {}
+      if (!saved) {
+        const theme = e.matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+        setThemeIcon(theme);
+      }
     });
   </script>
 

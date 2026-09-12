@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="120" viewBox="0 0 400 120" role="img" aria-label="LAF, marca personal de Antonio Funes">
+  <defs>
+    <linearGradient id="laf-grad" x1="40" y1="30" x2="360" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#C9A8E8"/>
+      <stop offset="1" stop-color="#7D6BC9"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="1" y="1" width="398" height="118" rx="32" fill="#0C0913" stroke="#2E2740" stroke-width="2"/>
+  <rect x="24" y="0" width="52" height="3" rx="1.5" fill="url(#laf-grad)" opacity="0.8"/>
+  <text x="200" y="72" text-anchor="middle" font-family="Poppins, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="58" font-weight="800" letter-spacing="8" fill="url(#laf-grad)">LAF</text>
+  <rect x="174" y="96" width="52" height="5" rx="2.5" fill="url(#laf-grad)"/>
+</svg>
