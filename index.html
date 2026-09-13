@@ -35,7 +35,10 @@
         <li><a href="#projects">Proyectos</a></li>
         <li><a href="#contact">Contacto</a></li>
       </ul>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema"></button>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <img src="resources/modoOscuro.svg" alt="" class="toggle-icon toggledark">
+        <img src="resources/modoClaro.svg" alt="" class="toggle-icon togglelight">
+      </button>
     </div>
   </nav>
 
@@ -294,29 +297,75 @@
 
     const themeToggle = document.getElementById("theme-toggle");
 
-    function setThemeIcon(theme) {
-      themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+    function popButton() {
+      themeToggle.classList.remove("switching");
+      void themeToggle.offsetWidth;
+      themeToggle.classList.add("switching");
     }
 
-    themeToggle.addEventListener("click", function () {
+    function wipeThemeSwitch(next, x, y, done) {
+      const root = document.documentElement;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const radius = Math.hypot(Math.max(x, vw - x), Math.max(y, vh - y));
+
+      const old = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      const nextBg = getComputedStyle(root).getPropertyValue("--bg").trim();
+      root.setAttribute("data-theme", old);
+
+      const overlay = document.createElement("div");
+      overlay.className = "theme-reveal";
+      overlay.style.background = nextBg || "#0C0913";
+      overlay.style.left = x + "px";
+      overlay.style.top = y + "px";
+      overlay.style.setProperty("--radius", Math.max(radius, 1) + "px");
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          overlay.classList.add("open");
+        });
+      });
+
+      setTimeout(function () {
+        root.setAttribute("data-theme", next);
+        overlay.classList.add("done");
+        setTimeout(function () { overlay.remove(); }, 300);
+        done && done();
+      }, 500);
+    }
+
+    themeToggle.addEventListener("click", function (e) {
       const current = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
       const next = current === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      setThemeIcon(next);
+
       try {
         localStorage.setItem("theme", next);
       } catch (err) {}
-    });
 
-    setThemeIcon(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.setAttribute("data-theme", next);
+        popButton();
+        return;
+      }
+
+      let x = e.clientX;
+      let y = e.clientY;
+      if (e.detail === 0) {
+        const r = themeToggle.getBoundingClientRect();
+        x = r.left + r.width / 2;
+        y = r.top + r.height / 2;
+      }
+
+      wipeThemeSwitch(next, x, y, popButton);
+    });
 
     window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function (e) {
       let saved = null;
       try { saved = localStorage.getItem("theme"); } catch (err) {}
       if (!saved) {
-        const theme = e.matches ? "light" : "dark";
-        document.documentElement.setAttribute("data-theme", theme);
-        setThemeIcon(theme);
+        document.documentElement.setAttribute("data-theme", e.matches ? "light" : "dark");
       }
     });
   </script>
